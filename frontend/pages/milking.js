@@ -11,6 +11,8 @@ export default function MilkingSession() {
   const [showModal, setShowModal] = useState(false);
   const [milkQuantity, setMilkQuantity] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState(null);
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
 
@@ -84,6 +86,74 @@ export default function MilkingSession() {
     };
   }, [isRunning, isPaused]);
 
+  // Handle exit confirmation
+  const handleExitConfirm = () => {
+    setIsRunning(false);
+    setIsPaused(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setShowExitConfirm(false);
+    if (pendingNavigation) {
+      router.push(pendingNavigation);
+      setPendingNavigation(null);
+    } else {
+      router.push('/');
+    }
+  };
+
+  const handleExitCancel = () => {
+    setShowExitConfirm(false);
+    setPendingNavigation(null);
+  };
+
+  // Handle navigation away during active session
+  useEffect(() => {
+    if (!isRunning) return;
+
+    const handleRouteChange = (url) => {
+      // Allow navigation to same page
+      if (url === router.asPath || url === '/milking') {
+        return;
+      }
+      
+      // Show confirmation modal and block navigation
+      setPendingNavigation(url);
+      setShowExitConfirm(true);
+      
+      // Prevent navigation
+      throw 'Route change aborted - session active';
+    };
+
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = 'Do you want to close this session? Your progress will be lost.';
+      return e.returnValue;
+    };
+
+    const handleRouteChangeError = (err) => {
+      // Ignore our intentional error
+      if (err === 'Route change aborted - session active') {
+        return;
+      }
+    };
+
+    if (router.events) {
+      router.events.on('routeChangeStart', handleRouteChange);
+      router.events.on('routeChangeError', handleRouteChangeError);
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      if (router.events) {
+        router.events.off('routeChangeStart', handleRouteChange);
+        router.events.off('routeChangeError', handleRouteChangeError);
+      }
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isRunning, router]);
+
   // Submit session
   const handleSubmit = async () => {
     if (!milkQuantity || parseFloat(milkQuantity) < 0) {
@@ -110,10 +180,12 @@ export default function MilkingSession() {
         }),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.success && response.ok) {
         router.push('/history');
       } else {
-        alert('Failed to save session. Please try again.');
+        alert(result.message || 'Failed to save session. Please try again.');
         setIsSubmitting(false);
       }
     } catch (error) {
@@ -136,7 +208,7 @@ export default function MilkingSession() {
         <title>Milking Session - Milking Tracker</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="container">
+      <div className="container milking-container">
         <div className="card">
           <h1 className="title">Milking Session</h1>
           
@@ -167,7 +239,18 @@ export default function MilkingSession() {
             </div>
           )}
 
-          <a className="link" onClick={() => router.push('/')} style={{ cursor: 'pointer', marginTop: '20px' }}>
+          <a 
+            className="link" 
+            onClick={() => {
+              if (isRunning) {
+                setPendingNavigation('/');
+                setShowExitConfirm(true);
+              } else {
+                router.push('/');
+              }
+            }} 
+            style={{ cursor: 'pointer', marginTop: '20px' }}
+          >
             Back to Home
           </a>
         </div>
@@ -201,6 +284,30 @@ export default function MilkingSession() {
                 {isSubmitting ? 'Saving...' : 'Save Session'}
               </button>
               <button className="btn btn-secondary" onClick={handleCancel}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Exit Confirmation Modal */}
+      {showExitConfirm && (
+        <div className="modal" onClick={handleExitCancel}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2 className="modal-title">⚠️ Active Session Detected</h2>
+            <p style={{ marginBottom: '20px', color: '#4b5563', lineHeight: '1.6' }}>
+              Do you want to close this session? Your current progress will be lost.
+            </p>
+            <div>
+              <button
+                className="btn btn-danger"
+                onClick={handleExitConfirm}
+                style={{ marginRight: '10px' }}
+              >
+                Yes, Close Session
+              </button>
+              <button className="btn btn-secondary" onClick={handleExitCancel}>
                 Cancel
               </button>
             </div>

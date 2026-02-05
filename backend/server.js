@@ -20,13 +20,25 @@ app.use('/sessions', sessionsRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Milking Tracker API is running' });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    message: 'Milking Tracker API is running',
+    data: {
+      timestamp: new Date().toISOString()
+    }
+  });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!' });
+  res.status(500).json({
+    success: false,
+    status: 500,
+    message: 'Internal server error',
+    data: null
+  });
 });
 
 app.listen(PORT, () => {
