@@ -30,7 +30,7 @@ export default function MilkingSession() {
     setIsRunning(true);
     setIsPaused(false);
     setSeconds(0);
-    
+
     // Start audio
     if (audioRef.current) {
       audioRef.current.play().catch(err => {
@@ -117,11 +117,11 @@ export default function MilkingSession() {
       if (url === router.asPath || url === '/milking') {
         return;
       }
-      
+
       // Show confirmation modal and block navigation
       setPendingNavigation(url);
       setShowExitConfirm(true);
-      
+
       // Prevent navigation
       throw 'Route change aborted - session active';
     };
@@ -166,7 +166,7 @@ export default function MilkingSession() {
     const duration = seconds;
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://trackingmusic.onrender.com';
       const response = await fetch(`${apiUrl}/sessions`, {
         method: 'POST',
         headers: {
@@ -211,15 +211,11 @@ export default function MilkingSession() {
       <div className="container milking-container">
         <div className="card">
           <h1 className="title">Milking Session</h1>
-          
+
           <div className="timer">{formatTime(seconds)}</div>
 
           {/* Hidden audio element */}
-          <audio
-            ref={audioRef}
-            loop
-            preload="auto"
-          >
+          <audio ref={audioRef} loop preload="auto">
             <source src="/music/After-the-Rain-Inspiring-Atmospheric-Music.mp3" type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
@@ -239,8 +235,8 @@ export default function MilkingSession() {
             </div>
           )}
 
-          <a 
-            className="link" 
+          <a
+            className="link"
             onClick={() => {
               if (isRunning) {
                 setPendingNavigation('/');
@@ -248,7 +244,7 @@ export default function MilkingSession() {
               } else {
                 router.push('/');
               }
-            }} 
+            }}
             style={{ cursor: 'pointer', marginTop: '20px' }}
           >
             Back to Home

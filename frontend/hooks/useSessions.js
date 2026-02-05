@@ -20,7 +20,7 @@ export function useSessions(page = 1, limit = 10) {
   const fetchSessions = async (currentPage = page, currentLimit = limit) => {
     try {
       setLoading(true);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://trackingmusic.onrender.com';
       const response = await fetch(`${apiUrl}/sessions?page=${currentPage}&limit=${currentLimit}`);
       
       const result = await response.json();

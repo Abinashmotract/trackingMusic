@@ -2,6 +2,11 @@
 
 A fullstack web application for dairy farmers to track milking sessions while playing calming music for cattle.
 
+## 🌐 Live URLs
+
+- **Frontend**: https://trackingmusic-1.onrender.com
+- **Backend API**: https://trackingmusic.onrender.com
+
 ## 📋 Prerequisites
 
 Before starting, make sure you have the following installed:
@@ -80,7 +85,11 @@ touch .env.local
 
 4. Add the following content to `frontend/.env.local`:
 ```env
+# For local development
 NEXT_PUBLIC_API_URL=http://localhost:5000
+
+# For production (live backend)
+# NEXT_PUBLIC_API_URL=https://trackingmusic.onrender.com
 ```
 
 5. Start the frontend development server:
@@ -145,7 +154,7 @@ Tracker Music/
 - `NODE_ENV` - Environment (development/production)
 
 ### Frontend (.env.local)
-- `NEXT_PUBLIC_API_URL` - Backend API URL (default: http://localhost:5000)
+- `NEXT_PUBLIC_API_URL` - Backend API URL (default: https://trackingmusic.onrender.com for production, http://localhost:5000 for local)
 
 ## 📡 API Endpoints
 
