@@ -7,7 +7,6 @@ const getSessions = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    // Validate pagination parameters
     if (page < 1 || limit < 1) {
       return res.status(400).json({
         success: false,
@@ -17,17 +16,14 @@ const getSessions = async (req, res) => {
       });
     }
 
-    // Get total count for pagination info
     const totalSessions = await MilkingSession.countDocuments();
     const totalPages = Math.ceil(totalSessions / limit);
 
-    // Fetch sessions with pagination
     const sessions = await MilkingSession.find()
       .sort({ created_at: -1 })
       .skip(skip)
       .limit(limit);
 
-    // Format the response
     const formattedSessions = sessions.map((session) => ({
       id: session._id || session.id,
       start_time: session.start_time.toISOString(),
@@ -68,7 +64,6 @@ const createSession = async (req, res) => {
   try {
     const { start_time, end_time, duration, milk_quantity } = req.body;
 
-    // Validation
     if (!start_time || !end_time || duration === undefined || milk_quantity === undefined) {
       return res.status(400).json({
         success: false,
