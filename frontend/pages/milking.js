@@ -225,7 +225,7 @@ export default function MilkingSession() {
               Start Milking
             </button>
           ) : (
-            <div>
+            <div className="button-group">
               <button className="btn" onClick={handlePauseResume}>
                 {isPaused ? 'Resume' : 'Pause'}
               </button>
@@ -270,12 +270,11 @@ export default function MilkingSession() {
                 autoFocus
               />
             </div>
-            <div>
+            <div className="button-group">
               <button
                 className="btn"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                style={{ marginRight: '10px' }}
               >
                 {isSubmitting ? 'Saving...' : 'Save Session'}
               </button>
@@ -295,11 +294,10 @@ export default function MilkingSession() {
             <p style={{ marginBottom: '20px', color: '#4b5563', lineHeight: '1.6' }}>
               Do you want to close this session? Your current progress will be lost.
             </p>
-            <div>
+            <div className="button-group">
               <button
                 className="btn btn-danger"
                 onClick={handleExitConfirm}
-                style={{ marginRight: '10px' }}
               >
                 Yes, Close Session
               </button>

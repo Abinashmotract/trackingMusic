@@ -51,7 +51,8 @@ a {
 }
 
 .container.milking-container {
-  width: 1000px;
+  max-width: 1000px;
+  width: 100%;
 }
 
 @keyframes fadeIn {
@@ -120,6 +121,14 @@ a {
 
 .btn:active {
   transform: translateY(0);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
 }
 
 .btn-secondary {
@@ -575,6 +584,11 @@ a {
     max-width: 100%;
   }
 
+  .container.milking-container {
+    max-width: 100%;
+    padding: 15px;
+  }
+
   .card {
     padding: 30px 20px;
   }
@@ -607,6 +621,38 @@ a {
   .btn {
     padding: 12px 30px;
     font-size: 1rem;
+    min-width: 120px;
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .button-group {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .button-group .btn {
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .modal-content .button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .modal-content .button-group .btn {
+    max-width: 100%;
+  }
+
+  .modal-content {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .modal-title {
+    font-size: 1.2rem;
   }
 
   .custom-table th {
@@ -691,5 +737,48 @@ a {
     height: 35px;
     padding: 6px 10px;
     font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container.milking-container {
+    padding: 10px;
+  }
+
+  .card {
+    padding: 20px 15px;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .timer {
+    font-size: 2.5rem;
+    margin: 20px 0;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    min-width: 100px;
+    margin: 8px 5px;
+  }
+
+  .input {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .input-label {
+    font-size: 1rem;
+  }
+
+  .modal-content {
+    padding: 15px;
+  }
+
+  .modal-content .button-group {
+    gap: 8px;
   }
 }
