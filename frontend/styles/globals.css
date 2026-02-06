@@ -655,23 +655,17 @@ a {
     font-size: 1.2rem;
   }
 
-  .custom-table th {
-    padding: 14px 10px;
-    font-size: 0.85rem;
-  }
-
-  .custom-table td {
-    padding: 12px 10px;
-    font-size: 0.85rem;
+  .card {
+    padding: 20px 15px;
   }
 
   .table-cell-time {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .quantity-badge {
-    padding: 5px 10px;
-    font-size: 0.85rem;
+    padding: 4px 8px;
+    font-size: 0.8rem;
   }
 
   .table {
@@ -683,34 +677,85 @@ a {
     padding: 10px 8px;
   }
 
+  .history-page {
+    padding: 10px 0;
+  }
+
   .history-hero {
-    padding: 30px 15px;
+    padding: 20px 15px;
   }
 
   .history-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
   }
 
   .history-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .history-stats-section {
+    padding: 15px 10px;
+    margin: 15px auto;
   }
 
   .history-stats-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 12px;
     padding: 0 10px;
   }
 
   .history-stat-card {
-    padding: 20px 15px;
+    padding: 15px 10px;
+  }
+
+  .history-stat-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
   }
 
   .history-stat-value {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+
+  .history-stat-suffix {
+    font-size: 1.2rem;
+  }
+
+  .history-stat-label {
+    font-size: 0.85rem;
   }
 
   .history-content {
     padding: 0 10px;
+    margin: 15px auto;
+  }
+
+  .table-wrapper {
+    margin: 15px 0;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .custom-table {
+    min-width: 600px;
+  }
+
+  .custom-table th {
+    padding: 12px 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .custom-table td {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 
   .pagination {
@@ -737,6 +782,128 @@ a {
     height: 35px;
     padding: 6px 10px;
     font-size: 0.85rem;
+  }
+
+  .pagination-info {
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-page {
+    padding: 5px 0;
+  }
+
+  .history-hero {
+    padding: 15px 10px;
+  }
+
+  .history-title {
+    font-size: 1.5rem;
+  }
+
+  .history-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .history-stats-section {
+    padding: 10px 5px;
+    margin: 10px auto;
+  }
+
+  .history-stats-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 0 5px;
+  }
+
+  .history-stat-card {
+    padding: 15px 10px;
+  }
+
+  .history-stat-icon {
+    font-size: 1.8rem;
+  }
+
+  .history-stat-value {
+    font-size: 1.3rem;
+  }
+
+  .history-stat-label {
+    font-size: 0.8rem;
+  }
+
+  .history-content {
+    padding: 0 5px;
+    margin: 10px auto;
+  }
+
+  .card {
+    padding: 15px 10px;
+  }
+
+  .custom-table {
+    min-width: 500px;
+  }
+
+  .custom-table th {
+    padding: 10px 6px;
+    font-size: 0.75rem;
+  }
+
+  .custom-table td {
+    padding: 8px 6px;
+    font-size: 0.75rem;
+  }
+
+  .table-cell-date {
+    font-size: 0.7rem;
+  }
+
+  .table-cell-time {
+    font-size: 0.7rem;
+  }
+
+  .table-cell-duration {
+    font-size: 0.7rem;
+  }
+
+  .quantity-badge {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+  }
+
+  .pagination {
+    margin-top: 20px;
+    gap: 12px;
+  }
+
+  .pagination-info {
+    font-size: 0.75rem;
+  }
+
+  .pagination-controls {
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .pagination-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .pagination-number {
+    min-width: 30px;
+    height: 30px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  .pagination-ellipsis {
+    padding: 0 5px;
+    font-size: 0.8rem;
   }
 }
 
