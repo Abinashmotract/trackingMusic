@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import axios from 'axios';
 
 export default function MilkingSession() {
   const router = useRouter();
@@ -167,22 +168,14 @@ export default function MilkingSession() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://trackingmusic.onrender.com';
-      const response = await fetch(`${apiUrl}/sessions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          start_time: startTime.toISOString(),
-          end_time: endTime.toISOString(),
-          duration: duration,
-          milk_quantity: parseFloat(milkQuantity),
-        }),
+      const { data: result } = await axios.post(`${apiUrl}/sessions`, {
+        start_time: startTime.toISOString(),
+        end_time: endTime.toISOString(),
+        duration: duration,
+        milk_quantity: parseFloat(milkQuantity),
       });
 
-      const result = await response.json();
-
-      if (result.success && response.ok) {
+      if (result.success) {
         router.push('/history');
       } else {
         alert(result.message || 'Failed to save session. Please try again.');

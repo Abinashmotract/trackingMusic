@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export function useSessions(page = 1, limit = 10) {
   const [sessions, setSessions] = useState([]);
@@ -21,11 +22,11 @@ export function useSessions(page = 1, limit = 10) {
     try {
       setLoading(true);
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://trackingmusic.onrender.com';
-      const response = await fetch(`${apiUrl}/sessions?page=${currentPage}&limit=${currentLimit}`);
-      
-      const result = await response.json();
-      
-      if (result.success && response.ok) {
+      const { data: result } = await axios.get(`${apiUrl}/sessions`, {
+        params: { page: currentPage, limit: currentLimit },
+      });
+
+      if (result.success) {
         setSessions(result.data.sessions);
         setPagination(result.data.pagination);
         setError(null);
